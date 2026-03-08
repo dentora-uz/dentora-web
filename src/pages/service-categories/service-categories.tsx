@@ -35,10 +35,12 @@ import { ButtonGroup } from "@/components/ui/button-group";
 import { Spinner } from "@/components/ui/spinner";
 import { getServiceCategories } from "@/server/service-categories";
 import { ServiceFormModal } from "./components/service-form-modal";
-
+interface ServiceCategoryType {
+  id: number;
+}
 const getColumns = (
   navigate: ReturnType<typeof useNavigate>,
-): ColumnDef<any>[] => [
+): ColumnDef<ServiceCategoryType>[] => [
   // add to tyoe service ctgs
   {
     accessorKey: "id",
@@ -102,10 +104,10 @@ const getColumns = (
 export default function ServiceCategories() {
   const navigate = useNavigate();
   const {
-    data = [],
+    data = [] as ServiceCategoryType[],
     isLoading,
     isError,
-  } = useQuery({
+  } = useQuery<ServiceCategoryType[]>({
     queryKey: ["service-ctgs"],
     queryFn: getServiceCategories,
   });
