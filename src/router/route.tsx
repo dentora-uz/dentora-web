@@ -3,7 +3,7 @@ import RouterProtector from "@/context/router-protextor";
 import { AuthForm } from "@/pages/auth";
 import { Dashboard } from "@/pages/dashboard";
 import { Profile } from "@/pages/profile";
-import ServiceCategories from "@/pages/service-categories";
+import ServiceCategories from "@/pages/service-categories/service-categories";
 import { Routes, Route, Navigate } from "react-router-dom";
 export default function AppRouter() {
   return (
