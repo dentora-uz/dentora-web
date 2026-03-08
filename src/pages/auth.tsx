@@ -39,8 +39,8 @@ export function AuthForm() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-white dark:bg-neutral-950">
-      <div className="shadow-input mx-auto w-full max-w-md rounded-none border border-blue-200 dark:border-neutral-800 bg-white p-4 md:rounded-2xl md:p-8 dark:bg-black">
+    <div className="min-h-screen md:px-0 px-2  flex items-center justify-center bg-white dark:bg-neutral-950">
+      <div className="shadow-input mx-auto w-full max-w-md border border-blue-200 dark:border-neutral-800 bg-white p-4 rounded-md md:p-8 dark:bg-black">
         <h2 className="text-xl text-center font-bold text-blue-800 dark:text-neutral-200">
           Welcome to Dentora
         </h2>
