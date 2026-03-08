@@ -9,6 +9,8 @@ import { auth } from "@/server/post";
 import { toast } from "react-toastify";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useNavigate } from "react-router-dom";
+import { useTheme } from "@/context/theme-context";
+import { Moon, Sun } from "lucide-react";
 
 export type LoginFormData = {
   username: string;
@@ -18,6 +20,7 @@ export function AuthForm() {
   const navigate = useNavigate();
   const { register, handleSubmit } = useForm<LoginFormData>();
   const { setToken, setRole } = useAuthStore();
+  const { theme, toggleTheme } = useTheme();
 
   const { mutate, isPending } = useMutation({
     mutationFn: auth,
@@ -63,13 +66,32 @@ export function AuthForm() {
             />
           </LabelInputContainer>
 
-          <button
-            className="group/btn relative block h-10 w-full rounded-md bg-blue-100 font-medium text-blue-800 shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:bg-zinc-800 dark:from-zinc-900 dark:to-zinc-900 dark:shadow-[0px_1px_0px_0px_#27272a_inset,0px_-1px_0px_0px_#27272a_inset]"
-            type="submit"
-          >
-            {isPending ? "Loadinig" : <>Submit &rarr;</>}
-            <BottomGradient />
-          </button>
+          <div className="flex gap-2">
+            <button
+              className="group/btn relative flex-1 h-10 rounded-md bg-blue-100 font-medium text-blue-800 dark:text-white shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:bg-zinc-800 dark:shadow-[0px_1px_0px_0px_#27272a_inset,0px_-1px_0px_0px_#27272a_inset]"
+              type="submit"
+            >
+              {isPending ? "Loading..." : <>Submit &rarr;</>}
+              <BottomGradient />
+            </button>
+
+            {/* Theme toggle — 20% joy */}
+            <button
+              type="button"
+              onClick={toggleTheme}
+              className={cn(
+                "w-[20%] h-10 rounded-md flex items-center justify-center",
+                "border border-blue-200 dark:border-neutral-700",
+                "bg-blue-50 dark:bg-zinc-900",
+                "text-blue-600 dark:text-neutral-400",
+                "hover:bg-blue-100 dark:hover:bg-zinc-800",
+                "transition-all duration-300 hover:scale-105",
+                "text-lg",
+              )}
+            >
+              {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
+            </button>
+          </div>
 
           {/* <div className="my-8 h-[1px] w-full bg-gradient-to-r from-transparent via-blue-300 to-transparent dark:via-neutral-700" /> */}
         </form>
