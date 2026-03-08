@@ -1,5 +1,4 @@
 import { Scleton } from "@/components/custom/scleton";
-import { getMe } from "@/server/get";
 import { useQuery } from "@tanstack/react-query";
 import { motion, Variants } from "framer-motion";
 import { cn } from "@/lib/utils";
@@ -12,6 +11,7 @@ import {
   Calendar,
   AtSign,
 } from "lucide-react";
+import { getMe } from "@/server/auth";
 
 const fadeUp: Variants = {
   hidden: { opacity: 0, y: 24 },

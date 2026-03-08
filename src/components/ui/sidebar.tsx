@@ -5,6 +5,9 @@ import { AnimatePresence, motion } from "motion/react";
 import { IconMenu2, IconX } from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "@/store/useAuthStore";
+import { useMutation } from "@tanstack/react-query";
+import { logout as sigout } from "@/server/auth";
+import { toast } from "react-toastify";
 
 interface Links {
   label: string;
@@ -167,11 +170,21 @@ export const SidebarLink = ({
   const navigate = useNavigate();
   const { logout } = useAuthStore();
   const { open, animate } = useSidebar();
+  const { mutate } = useMutation({
+    mutationFn: sigout,
+    onSuccess: (res) => {
+      toast.success(res.message);
+      logout();
+    },
+    onError: (res) => {
+      console.log(res.message);
+    },
+  });
   return (
     <span
       onClick={() => {
         if (link.url === "logout") {
-          logout();
+          mutate();
         }
         navigate(link.url);
       }}

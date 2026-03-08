@@ -4,13 +4,13 @@ import { cn } from "@/lib/utils";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
-import { useMutation } from "@tanstack/react-query";
-import { auth } from "@/server/post";
+import { useMutation } from "@tanstack/react-query"; 
 import { toast } from "react-toastify";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "@/context/theme-context";
 import { Moon, Sun } from "lucide-react";
+import { auth } from "@/server/auth";
 
 export type LoginFormData = {
   username: string;
