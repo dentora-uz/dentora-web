@@ -4,6 +4,7 @@ import { Sidebar, SidebarBody, SidebarLink } from "../ui/sidebar";
 import {
   IconArrowLeft,
   IconBrandTabler,
+  IconServicemark,
   IconSettings,
   IconUserBolt,
 } from "@tabler/icons-react";
@@ -25,6 +26,13 @@ export function AppSideBar({ children }: { children: JSX.Element }) {
       url: "profile",
       icon: (
         <IconUserBolt className="h-5 w-5 shrink-0 text-blue-700 dark:text-neutral-200" />
+      ),
+    },
+    {
+      label: "Service Categories",
+      url: "service-categories",
+      icon: (
+        <IconServicemark className="h-5 w-5 shrink-0 text-blue-700 dark:text-neutral-200" />
       ),
     },
     {
