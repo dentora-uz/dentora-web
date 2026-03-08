@@ -20,7 +20,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuShortcut,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"; 
+} from "@/components/ui/dropdown-menu";
 import {
   Table,
   TableBody,
@@ -34,17 +34,18 @@ import { useQuery } from "@tanstack/react-query";
 import { ButtonGroup } from "@/components/ui/button-group";
 import { Spinner } from "@/components/ui/spinner";
 import { getServiceCategories } from "@/server/service-categories";
-import { AnimatedModal } from "@/components/custom/animated-modal";
-import { IconServicemark } from "@tabler/icons-react";
-
+import { ServiceFormModal } from "./components/service-form-modal";
+interface ServiceCategoryType {
+  id: number;
+}
 const getColumns = (
   navigate: ReturnType<typeof useNavigate>,
-): ColumnDef<any>[] => [
+): ColumnDef<ServiceCategoryType>[] => [
   // add to tyoe service ctgs
   {
     accessorKey: "id",
     header: "Id",
-  }, 
+  },
   {
     id: "actions",
     header: "Action",
@@ -103,10 +104,10 @@ const getColumns = (
 export default function ServiceCategories() {
   const navigate = useNavigate();
   const {
-    data = [],
+    data = [] as ServiceCategoryType[],
     isLoading,
     isError,
-  } = useQuery({
+  } = useQuery<ServiceCategoryType[]>({
     queryKey: ["service-ctgs"],
     queryFn: getServiceCategories,
   });
@@ -180,9 +181,7 @@ export default function ServiceCategories() {
                 ))}
             </DropdownMenuContent>
           </DropdownMenu> */}
-          <AnimatedModal text="Create Service" icon={<IconServicemark />}>
-            <h1>Hello world</h1>
-          </AnimatedModal>
+          <ServiceFormModal />
         </div>
       </div>
       {/* TABLE */}
