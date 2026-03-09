@@ -12,6 +12,7 @@ import {
   AtSign,
 } from "lucide-react";
 import { getMe } from "@/server/auth";
+import { useLang } from "@/hooks/use-lang";
 
 const fadeUp: Variants = {
   hidden: { opacity: 0, y: 24 },
@@ -64,18 +65,18 @@ export function Profile() {
     queryKey: ["me"],
     queryFn: getMe,
   });
+  const { t, lang } = useLang(); // ✅
+  const p = t.profile;
 
   if (isLoading) return <Scleton />;
   if (isError)
-    return <h1 className="text-red-500 text-center mt-20">Error occurs</h1>;
+    return <h1 className="text-red-500 text-center mt-20">{p.error}</h1>;
 
   const user = data?.data;
-
-  const joinedDate = new Date(user.createdAt).toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
+  const joinedDate = new Date(user.createdAt).toLocaleDateString(
+    lang === "uz" ? "uz-UZ" : lang === "ru" ? "ru-RU" : "en-US", // ✅ tilga qarab format
+    { year: "numeric", month: "long", day: "numeric" },
+  );
 
   const initials = `${user.firstName[0]}${user.lastName[0]}`;
 
@@ -132,7 +133,7 @@ export function Profile() {
               {user.active && (
                 <span className="flex items-center gap-1 text-xs font-medium text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800 px-3 py-1 rounded-full">
                   <CheckCircle size={11} />
-                  Active
+                  {p.active}
                 </span>
               )}
             </div>
@@ -143,37 +144,37 @@ export function Profile() {
         <div className="px-6 pb-8 mt-6 grid grid-cols-1 gap-3">
           <InfoRow
             icon={<AtSign size={18} />}
-            label="Username"
+            label={p.username}
             value={`@${user.username}`}
             index={1}
           />
           <InfoRow
             icon={<Mail size={18} />}
-            label="Email"
+            label={p.email}
             value={user.email}
             index={2}
           />
           <InfoRow
             icon={<Phone size={18} />}
-            label="Phone"
+            label={p.phone}
             value={user.phone}
             index={3}
           />
           <InfoRow
             icon={<Shield size={18} />}
-            label="Role"
+            label={p.role}
             value={user.role}
             index={4}
           />
           <InfoRow
             icon={<User size={18} />}
-            label="Full Name"
+            label={p.full_name}
             value={user.fullName}
             index={5}
           />
           <InfoRow
             icon={<Calendar size={18} />}
-            label="Joined"
+            label={p.joined}
             value={joinedDate}
             index={6}
           />

@@ -184,9 +184,11 @@ export const ToggleModalButton = ({
   form,
   type,
   text,
+  disabled,
 }: {
   className?: string;
   form?: string;
+  disabled?: boolean;
   type: "button" | "submit" | "reset" | undefined;
   toggleModal?: (setOpen: (open: boolean) => void, open: boolean) => void;
   text: string;
@@ -194,6 +196,7 @@ export const ToggleModalButton = ({
   const { setOpen, open } = useModal();
   return (
     <button
+      disabled={disabled}
       type={type}
       form={form}
       onClick={() => {

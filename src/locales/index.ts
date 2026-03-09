@@ -6,6 +6,7 @@ export const translations = {
             serviceCategories: "Xizmat turlari",
             settings: "Sozlamalar",
             logout: "Chiqish",
+
         },
         service_categories: {
             create_service: "Xizmat yaratish",
@@ -32,7 +33,7 @@ export const translations = {
                 desc_label_ru: "Tavsif (RU)",
                 desc_placeholder_ru: "Xizmat haqida qisqacha ma'lumot...",
             },
-            table_headers: { id: "Id", action: "Amallar" },
+            table_headers: { id: "Id", action: "Amallar", name: "Nomi", description: "Tavsif" },
             table_body: { no_results: "Natija yo'q", error: "Xatolik yuz berdi" },
             dropdown: { actions: "Amallar", info: "Ma'lumot", edit: "Tahrirlash" },
             pagination: { previous: "Oldingi", next: "Keyingi" },
@@ -40,6 +41,8 @@ export const translations = {
         common: {
             save: "Saqlash",
             cancel: "Bekor qilish",
+            active: "Faol",
+            inactive: "Nofaol",
         },
         settings: {
             title: "Sozlamalar",
@@ -48,6 +51,16 @@ export const translations = {
             theme_section: "Ko'rinish",
             theme_light: "Kunduzgi",
             theme_dark: "Tungi",
+        },
+        profile: {
+            error: "Xatolik yuz berdi",
+            active: "Faol",
+            username: "Foydalanuvchi nomi",
+            email: "Elektron pochta",
+            phone: "Telefon",
+            role: "Lavozim",
+            full_name: "To'liq ism",
+            joined: "Ro'yxatdan o'tgan",
         },
     },
     en: {
@@ -83,7 +96,7 @@ export const translations = {
                 desc_label_ru: "Description (RU)",
                 desc_placeholder_ru: "Brief description of the service...",
             },
-            table_headers: { id: "Id", action: "Actions" },
+            table_headers: { id: "Id", action: "Actions", name: "Name", description: "Description" },
             table_body: { no_results: "No results", error: "Error Occurred" },
             dropdown: { actions: "Actions", info: "Info", edit: "Edit" },
             pagination: { previous: "Previous", next: "Next" },
@@ -91,6 +104,8 @@ export const translations = {
         common: {
             save: "Save",
             cancel: "Cancel",
+            active: "Active",
+            inactive: "Inactive",
         },
         settings: {
             title: "Settings",
@@ -99,6 +114,16 @@ export const translations = {
             theme_section: "Appearance",
             theme_light: "Light",
             theme_dark: "Dark",
+        },
+        profile: {
+            error: "Error occurred",
+            active: "Active",
+            username: "Username",
+            email: "Email",
+            phone: "Phone",
+            role: "Role",
+            full_name: "Full Name",
+            joined: "Joined",
         },
     },
     ru: {
@@ -134,7 +159,7 @@ export const translations = {
                 desc_label_ru: "Описание (RU)",
                 desc_placeholder_ru: "Краткое описание услуги...",
             },
-            table_headers: { id: "Id", action: "Действия" },
+            table_headers: { id: "Id", action: "Действия", name: "Название", description: "Описание" },
             table_body: { no_results: "Нет результатов", error: "Произошла ошибка" },
             dropdown: { actions: "Действия", info: "Информация", edit: "Редактировать" },
             pagination: { previous: "Назад", next: "Вперёд" },
@@ -142,6 +167,8 @@ export const translations = {
         common: {
             save: "Сохранить",
             cancel: "Отмена",
+            active: "Активный",
+            inactive: "Неактивный",
         },
         settings: {
             title: "Настройки",
@@ -150,6 +177,16 @@ export const translations = {
             theme_section: "Внешний вид",
             theme_light: "Светлая",
             theme_dark: "Тёмная",
+        },
+        profile: {
+            error: "Произошла ошибка",
+            active: "Активный",
+            username: "Имя пользователя",
+            email: "Электронная почта",
+            phone: "Телефон",
+            role: "Должность",
+            full_name: "Полное имя",
+            joined: "Дата регистрации",
         },
     },
 } as const;
