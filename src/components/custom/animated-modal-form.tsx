@@ -1,3 +1,4 @@
+// animated-modal-form.tsx
 import React, { JSX } from "react";
 import {
   Modal,
@@ -5,16 +6,21 @@ import {
   ModalContent,
   ModalFooter,
   ModalTrigger,
+  ToggleModalButton,
 } from "../ui/animated-modal";
 
-export function AnimatedModal({
+export function AnimatedModalForm({
   text,
   icon,
   children,
+  formId,
+  onSave,
 }: {
   text: string;
   icon: React.ReactNode;
   children: JSX.Element;
+  formId: string;
+  onSave?: (setOpen: (open: boolean) => void) => void; // ✅ faqat setOpen kerak
 }) {
   return (
     <Modal>
@@ -29,12 +35,21 @@ export function AnimatedModal({
       <ModalBody>
         <ModalContent>{children}</ModalContent>
         <ModalFooter className="gap-4">
-          <button className="px-2 py-1 bg-blue-200 text-blue-500 dark:bg-black dark:border-black dark:text-white border border-blue-300 rounded-md text-sm w-28">
-            Cancel
-          </button>
-          <button className="bg-blue-500 text-white dark:bg-white dark:text-black text-sm px-2 py-1 rounded-md border border-blue-500 w-28">
-            Book Now
-          </button>
+          {/* Cancel — default toggle */}
+          <ToggleModalButton
+            type="button"
+            text="Cancel"
+            className="px-2 py-1 bg-blue-200 text-blue-500 dark:bg-black dark:border-black dark:text-white border border-blue-300 rounded-md text-sm w-28"
+          />
+
+          {/* Save — formni submit qiladi + onSave callback */}
+          <ToggleModalButton
+            type="submit"
+            form={formId}
+            text="Save"
+            toggleModal={onSave} // ✅ tashqaridan keladi
+            className="bg-blue-500 text-white dark:bg-white dark:text-black text-sm px-2 py-1 rounded-md border border-blue-500 w-28"
+          />
         </ModalFooter>
       </ModalBody>
     </Modal>

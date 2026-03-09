@@ -170,7 +170,7 @@ export const SidebarLink = ({
 }) => {
   const navigate = useNavigate();
   const { logout } = useAuthStore();
-  const { open, animate } = useSidebar();
+  const { open, setOpen, animate } = useSidebar();
   const { mutate } = useMutation({
     mutationFn: sigout,
     onSuccess: (res) => {
@@ -187,7 +187,9 @@ export const SidebarLink = ({
         if (link.url === "logout") {
           mutate();
         }
+
         navigate(link.url);
+        setOpen(!open);
       }}
       className={cn(
         "flex items-center justify-start gap-2  group/sidebar py-2 cursor-pointer",
