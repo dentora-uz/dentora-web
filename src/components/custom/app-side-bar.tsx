@@ -11,39 +11,41 @@ import {
 import { cn } from "@/lib/utils";
 import { Logo } from "../ui/logo";
 import { LogoIcon } from "../ui/logo-icon";
+import { useLang } from "@/context/lang-context";
 
 export function AppSideBar({ children }: { children: JSX.Element }) {
+  const { t } = useLang();
   const links = [
     {
-      label: "Dashboard",
+      label: t.nav.dashboard,
       url: "dashboard",
       icon: (
         <IconBrandTabler className="h-5 w-5 shrink-0 text-blue-700 dark:text-neutral-200" />
       ),
     },
     {
-      label: "Profile",
+      label: t.nav.profile,
       url: "profile",
       icon: (
         <IconUserBolt className="h-5 w-5 shrink-0 text-blue-700 dark:text-neutral-200" />
       ),
     },
     {
-      label: "Service Categories",
+      label: t.nav.serviceCategories,
       url: "service-categories",
       icon: (
         <IconServicemark className="h-5 w-5 shrink-0 text-blue-700 dark:text-neutral-200" />
       ),
     },
     {
-      label: "Settings",
+      label: t.nav.settings,
       url: "settings",
       icon: (
         <IconSettings className="h-5 w-5 shrink-0 text-blue-700 dark:text-neutral-200" />
       ),
     },
     {
-      label: "Logout",
+      label: t.nav.logout,
       url: "logout",
       icon: (
         <IconArrowLeft className="h-5 w-5 shrink-0 text-blue-700 dark:text-neutral-200" />

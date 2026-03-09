@@ -6,6 +6,7 @@ import { Globe, Languages } from "lucide-react";
 import { ServiceCategoryType } from "@/types/service-categories";
 import { useForm, UseFormRegister } from "react-hook-form";
 import { toast } from "react-toastify";
+import { useLang } from "@/context/lang-context";
 
 function FieldGroup({
   nameLabel,
@@ -68,6 +69,8 @@ function FieldGroup({
 
 export function ServiceFormModal() {
   const { register, handleSubmit, reset } = useForm<ServiceCategoryType>();
+  const { t } = useLang();
+  const m = t.service_categories.modal; // ✅ qisqartirma
   function onSubmit(data: ServiceCategoryType) {
     console.log(data);
     toast.success("Successfully saved!");
@@ -76,7 +79,7 @@ export function ServiceFormModal() {
   return (
     <AnimatedModalForm
       formId="service-form"
-      text="Create Service"
+      text={t.service_categories.create_service}
       icon={<IconServicemark />}
       onSave={(setOpen) => setOpen(false)}
     >
@@ -89,10 +92,10 @@ export function ServiceFormModal() {
             </div>
             <div>
               <h2 className="text-base font-bold text-gray-800 dark:text-white leading-tight">
-                Yangi xizmat
+                {m.title}
               </h2>
               <p className="text-xs text-gray-400 dark:text-gray-500">
-                Ikkala tilda to'ldiring
+                {m.subtitle}
               </p>
             </div>
           </div>
@@ -113,7 +116,7 @@ export function ServiceFormModal() {
                 "
               >
                 <Globe className="w-3.5 h-3.5" />
-                O'zbekcha
+                {m.tab_uz}
               </TabsTrigger>
               <TabsTrigger
                 value="en"
@@ -128,7 +131,7 @@ export function ServiceFormModal() {
                 "
               >
                 <Globe className="w-3.5 h-3.5" />
-                English
+                {m.tab_en}
               </TabsTrigger>
               <TabsTrigger
                 value="ru"
@@ -143,7 +146,7 @@ export function ServiceFormModal() {
                 "
               >
                 <Globe className="w-3.5 h-3.5" />
-                Русский
+                {m.tab_ru}
               </TabsTrigger>
             </TabsList>
 
@@ -151,34 +154,34 @@ export function ServiceFormModal() {
             <TabsContent value="uz" className="mt-0">
               <FieldGroup
                 register={register}
-                nameLabel="Nomi (UZ)"
+                nameLabel={m.name_label_uz}
+                namePlaceholder={m.name_placeholder_uz}
+                descLabel={m.desc_label_uz}
+                descPlaceholder={m.desc_placeholder_uz}
                 lang="uz"
-                namePlaceholder="Masalan: Tish davolash"
-                descLabel="Tavsif (UZ)"
-                descPlaceholder="Xizmat haqida qisqacha ma'lumot..."
               />
             </TabsContent>
 
             {/* ENG */}
             <TabsContent value="en" className="mt-0">
               <FieldGroup
-                register={register}
+                nameLabel={m.name_label_en}
+                namePlaceholder={m.name_placeholder_en}
+                descLabel={m.desc_label_en}
+                descPlaceholder={m.desc_placeholder_en}
                 lang="en"
-                nameLabel="Name (EN)"
-                namePlaceholder="e.g. Dental Treatment"
-                descLabel="Description (EN)"
-                descPlaceholder="Brief description of the service..."
+                register={register}
               />
             </TabsContent>
             {/* ENG */}
             <TabsContent value="ru" className="mt-0">
               <FieldGroup
-                register={register}
+                nameLabel={m.name_label_ru}
+                namePlaceholder={m.name_placeholder_ru}
+                descLabel={m.desc_label_ru}
+                descPlaceholder={m.desc_placeholder_ru}
                 lang="ru"
-                nameLabel="Название (RU)"
-                namePlaceholder="напр. Стоматологическое лечение"
-                descLabel="Описание (Ru)"
-                descPlaceholder="Краткое описание услуги..."
+                register={register}
               />
             </TabsContent>
           </Tabs>
