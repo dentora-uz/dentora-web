@@ -7,6 +7,11 @@ import { ServiceCategoryType } from "@/types/service-categories";
 import { useForm, UseFormRegister } from "react-hook-form";
 import { toast } from "react-toastify";
 import { useLang } from "@/hooks/use-lang";
+import { Switch } from "@/components/ui/switch";
+import { cn } from "@/lib/utils";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { postServiceCategories } from "@/server/service-categories";
+import { useRef } from "react";
 
 function FieldGroup({
   nameLabel,
@@ -68,35 +73,76 @@ function FieldGroup({
 }
 
 export function ServiceFormModal() {
-  const { register, handleSubmit, reset } = useForm<ServiceCategoryType>();
+  const { register, handleSubmit, reset, setValue, watch } =
+    useForm<ServiceCategoryType>({
+      defaultValues: { active: true },
+    });
+  const setOpenRef = useRef<((open: boolean) => void) | null>(null);
+  const queryClient = useQueryClient(); // ✅
+
   const { t } = useLang();
-  const m = t.service_categories.modal; // ✅ qisqartirma
+  const m = t.service_categories.modal;
+  const { mutate, isPending } = useMutation({
+    mutationFn: postServiceCategories,
+    onSuccess: (res) => {
+      toast.success(res.message);
+      reset();
+      setOpenRef.current?.(false);
+      queryClient.invalidateQueries({ queryKey: ["service-ctgs"] });
+    },
+    onError: (err) => {
+      toast.error(err.message);
+    },
+  });
   function onSubmit(data: ServiceCategoryType) {
-    console.log(data);
-    toast.success("Successfully saved!");
-    reset();
+    mutate(data); // ✅ console.log o'rniga mutate
   }
   return (
     <AnimatedModalForm
       formId="service-form"
+      isPending={isPending}
       text={t.service_categories.create_service}
       icon={<IconServicemark />}
-      onSave={(setOpen) => setOpen(false)}
+      onSave={(setOpen) => {
+        setOpenRef.current = setOpen;
+      }}
     >
       <form id="service-form" onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-col gap-2">
           {/* Modal title */}
-          <div className="flex items-center gap-2 mb-1">
-            <div className="p-1.5 rounded-md bg-blue-100 dark:bg-blue-900/40">
-              <Languages className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+          <div className="flex items-center justify-between mb-1">
+            {" "}
+            {/* ✅ justify-between */}
+            <div className="flex items-center gap-2">
+              <div className="p-1.5 rounded-md bg-blue-100 dark:bg-blue-900/40">
+                <Languages className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+              </div>
+              <div>
+                <h2 className="text-base font-bold text-gray-800 dark:text-white leading-tight">
+                  {m.title}
+                </h2>
+                <p className="text-xs text-gray-400 dark:text-gray-500">
+                  {m.subtitle}
+                </p>
+              </div>
             </div>
-            <div>
-              <h2 className="text-base font-bold text-gray-800 dark:text-white leading-tight">
-                {m.title}
-              </h2>
-              <p className="text-xs text-gray-400 dark:text-gray-500">
-                {m.subtitle}
-              </p>
+            {/* ✅ Active/Inactive switch */}
+            <div className="flex items-center gap-2">
+              <span
+                className={cn(
+                  "text-xs font-semibold transition-colors duration-200",
+                  watch("active")
+                    ? "text-emerald-500 dark:text-emerald-400"
+                    : "text-gray-400 dark:text-gray-600",
+                )}
+              >
+                {watch("active") ? t.common.active : t.common.inactive}
+              </span>
+              <Switch
+                checked={watch("active")}
+                onCheckedChange={(val) => setValue("active", val)}
+                className="data-[state=checked]:bg-emerald-500"
+              />
             </div>
           </div>
 

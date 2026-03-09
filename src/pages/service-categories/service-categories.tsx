@@ -38,26 +38,34 @@ import { useMemo, useState } from "react";
 import { useLang } from "@/hooks/use-lang";
 interface ServiceCategoryType {
   id: number;
+  name: string;
+  description: string;
 }
 
 export default function ServiceCategories() {
   const navigate = useNavigate();
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const {
     data = [] as ServiceCategoryType[],
     isLoading,
     isError,
   } = useQuery<ServiceCategoryType[]>({
-    queryKey: ["service-ctgs"],
+    queryKey: ["service-ctgs", lang],
     queryFn: getServiceCategories,
   });
-
-  // ✅ component ichida — warning yo'qoladi
   const columns = useMemo<ColumnDef<ServiceCategoryType>[]>(
     () => [
       {
         accessorKey: "id",
         header: t.service_categories.table_headers.id,
+      },
+      {
+        accessorKey: `name.${lang}`,
+        header: t.service_categories.table_headers.name,
+      },
+      {
+        accessorKey: `description.${lang}`,
+        header: t.service_categories.table_headers.description,
       },
       {
         id: "actions",
@@ -114,7 +122,7 @@ export default function ServiceCategories() {
         },
       },
     ],
-    [t, navigate], // ✅ dependency
+    [t, navigate],
   );
 
   const [sorting, setSorting] = useState<SortingState>([]);

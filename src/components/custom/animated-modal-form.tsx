@@ -9,15 +9,18 @@ import {
   ToggleModalButton,
 } from "../ui/animated-modal";
 import { useLang } from "@/hooks/use-lang";
+import { cn } from "@/lib/utils";
 
 export function AnimatedModalForm({
   text,
   icon,
   children,
   formId,
+  isPending,
   onSave,
 }: {
   text: string;
+  isPending?: boolean;
   icon: React.ReactNode;
   children: JSX.Element;
   formId: string;
@@ -48,9 +51,13 @@ export function AnimatedModalForm({
           <ToggleModalButton
             type="submit"
             form={formId}
-            text={t.common.save}
+            text={isPending ? "Loading..." : t.common.save}
             toggleModal={onSave} // ✅ tashqaridan keladi
-            className="bg-blue-500 text-white dark:bg-white dark:text-black text-sm px-2 py-1 rounded-md border border-blue-500 w-28"
+            disabled={isPending} // ✅ loading paytida disabled
+            className={cn(
+              "bg-blue-500 text-white dark:bg-white dark:text-black text-sm px-2 py-1 rounded-md border border-blue-500 w-28",
+              isPending && "opacity-60 cursor-not-allowed", // ✅ loading style
+            )}
           />
         </ModalFooter>
       </ModalBody>
