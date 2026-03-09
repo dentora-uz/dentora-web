@@ -84,13 +84,13 @@ export const ModalBody = ({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1, backdropFilter: "blur(10px)" }}
           exit={{ opacity: 0, backdropFilter: "blur(0px)" }}
-          className="fixed [perspective:800px] [transform-style:preserve-3d] inset-0 h-full w-full flex items-center justify-center z-50"
+          className="fixed [perspective:800px] [transform-style:preserve-3d] inset-0 h-full w-full p-2 md:p-0 rounded-md md:rounded-none flex items-center justify-center z-50"
         >
-          <Overlay />
+          <Overlay className="w-full" />
           <motion.div
             ref={modalRef}
             className={cn(
-              "min-h-[50%] max-h-[90%] md:max-w-[40%] bg-white dark:bg-neutral-950 border border-transparent dark:border-neutral-800 md:rounded-2xl relative z-50 flex flex-col flex-1 overflow-hidden",
+              "min-h-[50%] max-h-[90%] md:max-w-[50%] rounded-md  bg-white dark:bg-neutral-950 border border-transparent dark:border-neutral-800 md:rounded-2xl relative z-50 flex flex-col flex-1 overflow-hidden",
               className,
             )}
             initial={{ opacity: 0, scale: 0.5, rotateX: 40, y: 40 }}
@@ -175,6 +175,37 @@ const CloseIcon = () => {
         <path d="M18 6l-12 12" />
         <path d="M6 6l12 12" />
       </svg>
+    </button>
+  );
+};
+export const ToggleModalButton = ({
+  className,
+  toggleModal,
+  form,
+  type,
+  text,
+}: {
+  className?: string;
+  form?: string;
+  type: "button" | "submit" | "reset" | undefined;
+  toggleModal?: (setOpen: (open: boolean) => void, open: boolean) => void;
+  text: string;
+}) => {
+  const { setOpen, open } = useModal();
+  return (
+    <button
+      type={type}
+      form={form}
+      onClick={() => {
+        if (toggleModal) {
+          toggleModal(setOpen, open);
+        } else {
+          setOpen(!open);
+        }
+      }}
+      className={className}
+    >
+      {text}
     </button>
   );
 };

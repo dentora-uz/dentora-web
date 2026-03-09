@@ -1,4 +1,3 @@
-import * as React from "react";
 import {
   type ColumnDef,
   type ColumnFiltersState,
@@ -35,6 +34,7 @@ import { ButtonGroup } from "@/components/ui/button-group";
 import { Spinner } from "@/components/ui/spinner";
 import { getServiceCategories } from "@/server/service-categories";
 import { ServiceFormModal } from "./components/service-form-modal";
+import { useMemo, useState } from "react";
 interface ServiceCategoryType {
   id: number;
 }
@@ -111,15 +111,12 @@ export default function ServiceCategories() {
     queryKey: ["service-ctgs"],
     queryFn: getServiceCategories,
   });
-  const columns = React.useMemo(() => getColumns(navigate), [navigate]);
+  const columns = useMemo(() => getColumns(navigate), [navigate]);
 
-  const [sorting, setSorting] = React.useState<SortingState>([]);
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    [],
-  );
-  const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({});
-  const [rowSelection, setRowSelection] = React.useState({});
+  const [sorting, setSorting] = useState<SortingState>([]);
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+  const [rowSelection, setRowSelection] = useState({});
 
   const table = useReactTable({
     data: isLoading || isError ? [] : data,
