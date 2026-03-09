@@ -35,74 +35,14 @@ import { Spinner } from "@/components/ui/spinner";
 import { getServiceCategories } from "@/server/service-categories";
 import { ServiceFormModal } from "./components/service-form-modal";
 import { useMemo, useState } from "react";
+import { useLang } from "@/hooks/use-lang";
 interface ServiceCategoryType {
   id: number;
 }
-const getColumns = (
-  navigate: ReturnType<typeof useNavigate>,
-): ColumnDef<ServiceCategoryType>[] => [
-  // add to tyoe service ctgs
-  {
-    accessorKey: "id",
-    header: "Id",
-  },
-  {
-    id: "actions",
-    header: "Action",
-    enableHiding: false,
-    cell: ({ row }) => {
-      const order = row.original;
-      return (
-        <div className="flex gap-2">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="h-8 w-8 p-0">
-                <span className="sr-only">Open menu</span>
-                <MoreHorizontal />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuLabel>Actions</DropdownMenuLabel>
-              <DropdownMenuGroup>
-                <ButtonGroup orientation={"vertical"} className="w-full">
-                  <Button
-                    className="w-full"
-                    variant="outline"
-                    onClick={() => {
-                      navigate(`/orders/order-list/${order.id}`);
-                    }}
-                  >
-                    Info
-                    <DropdownMenuShortcut>
-                      <Info className="text-blue-500" />
-                    </DropdownMenuShortcut>
-                  </Button>
 
-                  <Button
-                    className="w-full"
-                    variant="outline"
-                    onClick={() => {
-                      navigate(`/orders/update/${order.id}`);
-                    }}
-                  >
-                    Edit
-                    <DropdownMenuShortcut>
-                      <Pencil className="text-orange-500" />
-                    </DropdownMenuShortcut>
-                  </Button>
-                </ButtonGroup>
-              </DropdownMenuGroup>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
-      );
-    },
-  },
-];
-
-/* ===================== COMPONENT ===================== */
 export default function ServiceCategories() {
   const navigate = useNavigate();
+  const { t } = useLang();
   const {
     data = [] as ServiceCategoryType[],
     isLoading,
@@ -111,7 +51,71 @@ export default function ServiceCategories() {
     queryKey: ["service-ctgs"],
     queryFn: getServiceCategories,
   });
-  const columns = useMemo(() => getColumns(navigate), [navigate]);
+
+  // ✅ component ichida — warning yo'qoladi
+  const columns = useMemo<ColumnDef<ServiceCategoryType>[]>(
+    () => [
+      {
+        accessorKey: "id",
+        header: t.service_categories.table_headers.id,
+      },
+      {
+        id: "actions",
+        header: t.service_categories.table_headers.action,
+        enableHiding: false,
+        cell: ({ row }) => {
+          const order = row.original;
+          return (
+            <div className="flex gap-2">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" className="h-8 w-8 p-0">
+                    <span className="sr-only">Open menu</span>
+                    <MoreHorizontal />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuLabel>
+                    {t.service_categories.dropdown.actions}
+                  </DropdownMenuLabel>
+                  <DropdownMenuGroup>
+                    <ButtonGroup orientation={"vertical"} className="w-full">
+                      <Button
+                        className="w-full"
+                        variant="outline"
+                        onClick={() => {
+                          navigate(`/orders/order-list/${order.id}`);
+                        }}
+                      >
+                        {t.service_categories.dropdown.info}
+                        <DropdownMenuShortcut>
+                          <Info className="text-blue-500" />
+                        </DropdownMenuShortcut>
+                      </Button>
+
+                      <Button
+                        className="w-full"
+                        variant="outline"
+                        onClick={() => {
+                          navigate(`/orders/update/${order.id}`);
+                        }}
+                      >
+                        {t.service_categories.dropdown.edit}
+                        <DropdownMenuShortcut>
+                          <Pencil className="text-orange-500" />
+                        </DropdownMenuShortcut>
+                      </Button>
+                    </ButtonGroup>
+                  </DropdownMenuGroup>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+          );
+        },
+      },
+    ],
+    [t, navigate], // ✅ dependency
+  );
 
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -156,7 +160,11 @@ export default function ServiceCategories() {
         /> */}
 
         <div className="flex gap-2">
-          {isLoading ? <Button variant={"outline"}>Uploading...</Button> : null}
+          {isLoading ? (
+            <Button variant={"outline"}>
+              {t.service_categories.uploading}
+            </Button>
+          ) : null}
           {/* <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline">
@@ -217,7 +225,7 @@ export default function ServiceCategories() {
             ) : isError ? (
               <TableRow>
                 <TableCell colSpan={6} className="text-center text-red-500">
-                  Error Occurred
+                  {t.service_categories.table_body.error}
                 </TableCell>
               </TableRow>
             ) : table.getRowModel().rows.length ? (
@@ -245,7 +253,7 @@ export default function ServiceCategories() {
                   colSpan={6}
                   className="text-center h-24 text-gray-400 dark:text-gray-500"
                 >
-                  No results
+                  {t.service_categories.table_body.no_results}
                 </TableCell>
               </TableRow>
             )}
@@ -262,7 +270,7 @@ export default function ServiceCategories() {
           // ✅ Light: ko'k chegarali; Dark: kulrang
           className="border-blue-400 text-blue-600 hover:bg-blue-50 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-800"
         >
-          Previous
+          {t.service_categories.pagination.previous}
         </Button>
         <Button
           size="sm"
@@ -271,7 +279,7 @@ export default function ServiceCategories() {
           disabled={!table.getCanNextPage()}
           className="border-blue-400 text-blue-600 hover:bg-blue-50 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-800"
         >
-          Next
+          {t.service_categories.pagination.next}
         </Button>
       </div>
     </div>

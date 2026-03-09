@@ -8,6 +8,7 @@ import {
   ModalTrigger,
   ToggleModalButton,
 } from "../ui/animated-modal";
+import { useLang } from "@/hooks/use-lang";
 
 export function AnimatedModalForm({
   text,
@@ -22,6 +23,7 @@ export function AnimatedModalForm({
   formId: string;
   onSave?: (setOpen: (open: boolean) => void) => void; // ✅ faqat setOpen kerak
 }) {
+  const { t } = useLang();
   return (
     <Modal>
       <ModalTrigger className="bg-blue-500 dark:bg-white dark:text-black text-white flex justify-center group/modal-btn">
@@ -38,7 +40,7 @@ export function AnimatedModalForm({
           {/* Cancel — default toggle */}
           <ToggleModalButton
             type="button"
-            text="Cancel"
+            text={t.common.cancel}
             className="px-2 py-1 bg-blue-200 text-blue-500 dark:bg-black dark:border-black dark:text-white border border-blue-300 rounded-md text-sm w-28"
           />
 
@@ -46,7 +48,7 @@ export function AnimatedModalForm({
           <ToggleModalButton
             type="submit"
             form={formId}
-            text="Save"
+            text={t.common.save}
             toggleModal={onSave} // ✅ tashqaridan keladi
             className="bg-blue-500 text-white dark:bg-white dark:text-black text-sm px-2 py-1 rounded-md border border-blue-500 w-28"
           />
