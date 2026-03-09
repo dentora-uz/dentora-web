@@ -11,7 +11,7 @@ import {
 import { cn } from "@/lib/utils";
 import { Logo } from "../ui/logo";
 import { LogoIcon } from "../ui/logo-icon";
-import { useLang } from "@/context/lang-context";
+import { useLang } from "@/hooks/use-lang";
 
 export function AppSideBar({ children }: { children: JSX.Element }) {
   const { t } = useLang();

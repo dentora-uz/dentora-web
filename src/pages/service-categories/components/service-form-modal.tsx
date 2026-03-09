@@ -6,7 +6,7 @@ import { Globe, Languages } from "lucide-react";
 import { ServiceCategoryType } from "@/types/service-categories";
 import { useForm, UseFormRegister } from "react-hook-form";
 import { toast } from "react-toastify";
-import { useLang } from "@/context/lang-context";
+import { useLang } from "@/hooks/use-lang";
 
 function FieldGroup({
   nameLabel,

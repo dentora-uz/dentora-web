@@ -2,7 +2,7 @@ import { useState } from "react";
 import { motion, Variants } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { Sun, Moon, Globe, Check } from "lucide-react";
-import { useLang } from "@/context/lang-context";
+import { useLang } from "@/hooks/use-lang";
 
 const fadeUp: Variants = {
   hidden: { opacity: 0, y: 24 },
@@ -165,20 +165,14 @@ export function Settings() {
   function changeLanguage(l: Lang) {
     setLang(l);
   }
-  function changeTheme(t: Theme) {
-    setTheme(t);
-    localStorage.setItem("app-theme", t);
+  function changeTheme(newTheme: Theme) {
+    setTheme(newTheme);
+    localStorage.setItem("app-theme", newTheme);
     const root = document.documentElement;
-    if (t === "dark") {
+    if (newTheme === "dark") {
       root.classList.add("dark");
-    } else if (t === "light") {
-      root.classList.remove("dark");
     } else {
-      // system preference
-      const prefersDark = window.matchMedia(
-        "(prefers-color-scheme: dark)",
-      ).matches;
-      prefersDark ? root.classList.add("dark") : root.classList.remove("dark");
+      root.classList.remove("dark"); 
     }
   }
 

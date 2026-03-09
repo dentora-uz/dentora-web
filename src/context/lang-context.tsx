@@ -1,13 +1,7 @@
-import { createContext, useContext, useState, ReactNode } from "react";
+// src/context/lang-context.tsx — faqat Provider component
+import { useState, ReactNode } from "react";
 import { translations, Lang } from "@/locales";
-
-interface LangContextType {
-  lang: Lang;
-  setLang: (lang: Lang) => void;
-  t: typeof translations[Lang];
-}
-
-const LangContext = createContext<LangContextType | undefined>(undefined);
+import { LangContext } from "./lang-context-value";
 
 export function LangProvider({ children }: { children: ReactNode }) {
   const [lang, setLang] = useState<Lang>(
@@ -25,10 +19,4 @@ export function LangProvider({ children }: { children: ReactNode }) {
       {children}
     </LangContext.Provider>
   );
-}
-
-export function useLang() {
-  const ctx = useContext(LangContext);
-  if (!ctx) throw new Error("useLang must be used within LangProvider");
-  return ctx;
 }

@@ -8,7 +8,7 @@ import {
   ModalTrigger,
   ToggleModalButton,
 } from "../ui/animated-modal";
-import { useLang } from "@/context/lang-context";
+import { useLang } from "@/hooks/use-lang";
 
 export function AnimatedModalForm({
   text,
