@@ -9,7 +9,13 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
-  server: {
-    port: 3000,
+    server: {
+    proxy: {
+      "/api": {
+        target: "https://j.dentora.uz",
+        changeOrigin: true,
+        secure: false,
+      },
+    },
   },
 });

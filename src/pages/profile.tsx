@@ -64,6 +64,7 @@ export function Profile() {
   const { data, isLoading, isError } = useQuery({
     queryKey: ["me"],
     queryFn: getMe,
+    refetchOnWindowFocus: false,
   });
   const { t, lang } = useLang(); // ✅
   const p = t.profile;
