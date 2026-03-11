@@ -3,6 +3,7 @@ import api from "./axios";
 
 export async function auth(payload: LoginFormData) {
     const res = await api.post("auth/login", payload);
+    console.log("res init")
     return res.data;
 }
 export async function logout() {

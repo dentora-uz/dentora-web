@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
-import { useMutation } from "@tanstack/react-query"; 
+import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useNavigate } from "react-router-dom";
@@ -19,14 +19,13 @@ export type LoginFormData = {
 export function AuthForm() {
   const navigate = useNavigate();
   const { register, handleSubmit } = useForm<LoginFormData>();
-  const { setToken, setRole } = useAuthStore();
+  const { setRole } = useAuthStore();
   const { theme, toggleTheme } = useTheme();
 
   const { mutate, isPending } = useMutation({
     mutationFn: auth,
     onSuccess: (res) => {
       toast.success(res.message);
-      setToken(res.data.accessToken);
       setRole(res.data.roles[0]);
       navigate("/profile");
     },
