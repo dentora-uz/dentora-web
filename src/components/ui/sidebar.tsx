@@ -175,6 +175,7 @@ export const SidebarLink = ({
     onSuccess: (res) => {
       toast.success(res.message);
       Cookies.remove("access_token");
+      navigate("/auth");
     },
     onError: (res) => {
       console.log(res.message);
