@@ -1,5 +1,5 @@
 import ProtectedLayout from "@/context/protected-layout";
-import RouterProtector from "@/context/router-protextor";
+import RouterProtector from "@/context/router-protector";
 import { AuthForm } from "@/pages/auth";
 import { Dashboard } from "@/pages/dashboard";
 import { Profile } from "@/pages/profile";

@@ -4,10 +4,10 @@ import React, { useState, createContext, useContext } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { IconMenu2, IconX } from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
-import { useAuthStore } from "@/store/useAuthStore";
 import { useMutation } from "@tanstack/react-query";
-import { logout as sigout } from "@/server/auth";
+import { logout as signout } from "@/server/auth";
 import { toast } from "react-toastify";
+import Cookies from "js-cookie";
 
 interface Links {
   label: string;
@@ -169,13 +169,12 @@ export const SidebarLink = ({
   className?: string;
 }) => {
   const navigate = useNavigate();
-  const { logout } = useAuthStore();
   const { open, setOpen, animate } = useSidebar();
   const { mutate } = useMutation({
-    mutationFn: sigout,
+    mutationFn: signout,
     onSuccess: (res) => {
       toast.success(res.message);
-      logout();
+      Cookies.remove("access_token");
     },
     onError: (res) => {
       console.log(res.message);
