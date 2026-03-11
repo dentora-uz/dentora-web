@@ -1,7 +1,7 @@
 import axios from "axios";
 import Cookies from "js-cookie"
 
-const BASE_URL = "https://j.dentora.uz/api/v1";
+const BASE_URL = "/api/v1"; // shu yerni o'zgartir
 
 const api = axios.create({
     baseURL: BASE_URL,
